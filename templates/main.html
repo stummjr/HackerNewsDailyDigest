@@ -1,0 +1,38 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block bootstrap3_title %}
+    Hacker News Front Page
+{% endblock %}
+
+{% block bootstrap3_content %}
+<div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Logo" src="{% static 'img/logo.png' %}">
+            </a>
+            <a class="navbar-brand" href="#">FrontPage HackerNews!</a>
+        </div>
+      </div>
+    </nav>
+    <ul class="list-group">
+        {% for item in items %}
+            <li class="list-group-item">
+                {{ forloop.counter }}.
+                <a href="{{item.url}}">{{ item.title }}</a>
+                <span class="badge">{{item.points}} points</span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>posted by <a href="user?id={{item.user_name}}">{{item.user_name}}</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{item.comments_url}}"><span class="badge pull-right">{{item.comments}}</span></a>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock bootstrap3_content %}
