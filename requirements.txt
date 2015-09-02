@@ -7,6 +7,7 @@ characteristic==14.3.0
 cryptography==1.0
 cssselect==0.9.1
 dj-database-url==0.3.0
+dj-static==0.0.6
 Django==1.8.4
 django-bootstrap3==6.2.2
 django-celery==3.1.16
@@ -28,6 +29,7 @@ Scrapy==1.0.3
 scrapy-djangoitem==1.0.0
 service-identity==14.0.0
 six==1.9.0
+static3==0.6.1
 Twisted==15.3.0
 Unipath==1.1
 w3lib==1.12.0
