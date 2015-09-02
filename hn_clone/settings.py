@@ -10,9 +10,7 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+import dj_database_url
 from unipath import Path
 from datetime import timedelta
 
@@ -22,12 +20,9 @@ BASE_DIR = Path(__file__).parent
 
 # Celery settings
 BROKER_URL = 'django://'
-#: Only add pickle to this list if your broker is secured
-#: from unwanted access (see userguide/security.html)
-CELERY_ACCEPT_CONTENT = ['json', 'pickle']
+CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-
 
 CELERYBEAT_SCHEDULE = {
     'update_events': {
@@ -36,10 +31,6 @@ CELERYBEAT_SCHEDULE = {
     }
 }
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'zztwt1danz6frz*#5x65^&k+e*^)calp)ru_b^sane#$qoy-1d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -97,18 +88,12 @@ WSGI_APPLICATION = 'hn_clone.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    # dj_database_url expects an env var called DATABASE_URL.
+    #   export DATABASE_URL='postgres://<user>:<passwd>@<host>:<port>/<dbname>'
+    'default': dj_database_url.config(),
 }
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 LANGUAGE_CODE = 'en-us'
 
@@ -119,9 +104,5 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'

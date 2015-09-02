@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">
-                <img alt="Logo" src="{% static 'img/logo.png' %}">
+                <img alt="FrontPage HackerNews" src="{% static 'img/logo.png' %}">
             </a>
             <a class="navbar-brand" href="#">FrontPage HackerNews!</a>
         </div>
@@ -19,18 +19,20 @@
     </nav>
     <ul class="list-group">
         {% for item in items %}
-            <li class="list-group-item">
+            <li class="list-group-item {% if not item.user_name %}list-group-item-danger{% endif %}">
                 {{ forloop.counter }}.
                 <a href="{{item.url}}">{{ item.title }}</a>
-                <span class="badge">{{item.points}} points</span>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p>posted by <a href="user?id={{item.user_name}}">{{item.user_name}}</a></p>
+                {% if item.user_name %}
+                    <span class="badge">{{item.points}}</span>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>posted by <a href="http://news.ycombinator.com/user?id={{item.user_name}}">{{item.user_name}}</a></p>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{item.comments_url}}"><span class="badge pull-right">{{item.comments}}</span></a>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <a href="{{item.comments_url}}"><span class="badge pull-right">{{item.comments}}</span></a>
-                    </div>
-                </div>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>

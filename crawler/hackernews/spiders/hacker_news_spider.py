@@ -68,7 +68,7 @@ class HackerNewsSpider(scrapy.Spider):
         url = link_sel.xpath("./a/@href").extract_first()
         add_if_not_none(news_item, 'url', url)
         details_sel = sel.xpath("./following-sibling::*[position()=1]/td[@class='subtext']")
-        points = details_sel.xpath("./span[@class='score']/text()").extract_first().split(" ")[0]
+        points = details_sel.xpath("./span[@class='score']/text()").extract_first()
         add_if_not_none(news_item, 'points', points)
         user_name = details_sel.xpath(
             "./a[starts-with(@href, 'user')]/text()"
