@@ -19,10 +19,10 @@ class HackerNewsSpider(scrapy.Spider):
             item = self.extract_news_item(sel, response)
             yield item
             # ads have no comments
-            if 'comments_url' in item and item['comments_url'] is not None:
-                yield scrapy.Request(
-                    item['comments_url'], callback=self.parse_comments
-                )
+            # if 'comments_url' in item and item['comments_url'] is not None:
+            #     yield scrapy.Request(
+            #         item['comments_url'], callback=self.parse_comments
+            #     )
         next_page = LinkExtractor(restrict_xpaths="//a[string(.)='More']").extract_links(response)
         if next_page and self.pages_to_follow:
             self.pages_to_follow -= 1
