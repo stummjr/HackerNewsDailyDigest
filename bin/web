@@ -1,0 +1,1 @@
+gunicorn hn_clone.wsgi & celery -A hn_clone worker -B
