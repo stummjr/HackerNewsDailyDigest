@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).parent
 
 # Celery settings
 BROKER_URL = 'django://'
-CELERY_ACCEPT_CONTENT = ['json', 'pickle']
+CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
@@ -28,14 +28,14 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERYBEAT_SCHEDULE = {
     'update_events': {
         'task': 'webapp.tasks.crawl',
-        'schedule': timedelta(minutes=30)
+        'schedule': timedelta(minutes=15)
     }
 }
 
 SECRET_KEY = 'zztwt1danz6frz*#5x65^&k+e*^)calp)ru_b^sane#$qoy-1d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
