@@ -1,6 +1,8 @@
 import scrapy
 from w3lib import url
 from urlparse import urljoin
+from datetime import datetime
+from webapp.models import HackerNewsItemSet
 from scrapy.linkextractors import LinkExtractor
 from crawler.hackernews.items import HackerNewsItem, CommentItem
 
@@ -15,8 +17,11 @@ class HackerNewsSpider(scrapy.Spider):
         self.pages_to_follow = int(pages_to_follow)
 
     def parse(self, response):
+        item_set = HackerNewsItemSet()
+        item_set.timestamp = datetime.now()
+        item_set.save()
         for sel in response.xpath("//tr[@class='athing']"):
-            item = self.extract_news_item(sel, response)
+            item = self.extract_news_item(sel, item_set, response)
             yield item
             # ads have no comments
             # if 'comments_url' in item and item['comments_url'] is not None:
@@ -60,8 +65,9 @@ class HackerNewsSpider(scrapy.Spider):
         for item in items:
             yield item
 
-    def extract_news_item(self, sel, response):
+    def extract_news_item(self, sel, item_set, response):
         news_item = HackerNewsItem()
+        news_item['item_set'] = item_set
         link_sel = sel.xpath("./td[@class='title']")
         title = link_sel.xpath("./a/text()").extract_first()
         add_if_not_none(news_item, 'title', title)

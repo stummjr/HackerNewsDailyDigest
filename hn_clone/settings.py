@@ -29,7 +29,7 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERYBEAT_SCHEDULE = {
     'update_events': {
         'task': 'webapp.tasks.crawl',
-        'schedule': timedelta(minutes=15)
+        'schedule': timedelta(minutes=1)
     }
 }
 
