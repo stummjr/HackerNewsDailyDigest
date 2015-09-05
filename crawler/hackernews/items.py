@@ -5,7 +5,3 @@ from webapp import models
 
 class HackerNewsItem(DjangoItem):
     django_model = models.HackerNewsItem
-
-
-class CommentItem(DjangoItem):
-    django_model = models.CommentItem
