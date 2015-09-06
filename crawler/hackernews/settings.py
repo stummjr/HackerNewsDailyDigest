@@ -11,7 +11,7 @@ SPIDER_MODULES = ['crawler.hackernews.spiders']
 NEWSPIDER_MODULE = 'crawler.hackernews.spiders'
 
 ITEM_PIPELINES = {
-    'crawler.hackernews.pipelines.HackernewsPipeline': 300,
+    'crawler.hackernews.pipelines.HackernewsDbStorePipeline': 300,
 }
 
 DOWNLOAD_DELAY = 0.5

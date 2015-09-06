@@ -4,6 +4,9 @@ from django.db import models
 class HackerNewsItemSet(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    def __unicode__(self):
+        return unicode(self.timestamp)
+
 
 class HackerNewsItem(models.Model):
     item_set = models.ForeignKey('HackerNewsItemSet', null=True)
