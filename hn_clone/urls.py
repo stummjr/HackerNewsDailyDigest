@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'webapp.views.home', name='home'),
+    url(r'^daily$', 'webapp.views.daily_summary', name='daily_summary'),
 ]
