@@ -14,18 +14,19 @@ def home(request):
 
 
 def daily_summary(request):
+    today = datetime.now()
     todays_item_sets = HackerNewsItemSet.objects.filter(
-        timestamp__day=datetime.now().day,
-        timestamp__month=datetime.now().month,
-        timestamp__year=datetime.now().year
+        timestamp__day=today.day,
+        timestamp__month=today.month,
+        timestamp__year=today.year
     )
     # TODO: improve this!!!
     items = []
     for item_set in todays_item_sets:
         items += list(HackerNewsItem.objects.filter(item_set=item_set))
     items_response = []
-    for item, cnt in sorted(count(items).items(), key=lambda item: item[1], reverse=True)[:30]:
-        items_response.append(HackerNewsItem.objects.filter(url=item)[0])
+    for item_url, cnt in sorted(count(items).items(), key=lambda item: item[1], reverse=True)[:30]:
+        items_response.append(HackerNewsItem.objects.filter(url=item_url).last())
     return render(request, 'main.html', {
         'items': sorted(items_response,
                         key=lambda item: item.points and int(item.points.split(" ")[0]),
