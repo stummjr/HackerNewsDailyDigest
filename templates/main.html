@@ -25,13 +25,13 @@
                 {{ forloop.counter }}.
                 <a href="{{item.url}}">{{ item.title }}</a>
                 {% if item.user_name %}
-                    <span class="badge">{{item.points}}</span>
+                    <span class="badge">{{item.points}} points</span>
                     <div class="row">
                         <div class="col-md-6">
                             <p>posted by <a href="http://news.ycombinator.com/user?id={{item.user_name}}">{{item.user_name}}</a></p>
                         </div>
                         <div class="col-md-6">
-                            <a href="{{item.comments_url}}"><span class="badge pull-right">{{item.comments}}</span></a>
+                            <a href="{{item.comments_url}}"><span class="badge pull-right">{{item.comments}} comments</span></a>
                         </div>
                     </div>
                 {% endif %}

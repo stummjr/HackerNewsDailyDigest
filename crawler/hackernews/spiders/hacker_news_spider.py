@@ -35,7 +35,7 @@ class HackerNewsSpider(scrapy.Spider):
         add_if_not_none(news_item, 'url', url)
         details_sel = sel.xpath("./following-sibling::*[position()=1]/td[@class='subtext']")
         points = details_sel.xpath("./span[@class='score']/text()").extract_first()
-        add_if_not_none(news_item, 'points', points)
+        add_if_not_none(news_item, 'points', 0 if not points else int(points.split(" ")[0]))
         user_name = details_sel.xpath(
             "./a[starts-with(@href, 'user')]/text()"
         ).extract_first()
@@ -48,6 +48,7 @@ class HackerNewsSpider(scrapy.Spider):
             "./a[starts-with(@href, 'item')][contains(., 'comment') or"
             "contains(., 'discuss')]/text()"
         ).extract_first()
+        comments = 0 if not comments or comments == "discuss" else int(comments.split(" ")[0])
         add_if_not_none(news_item, 'comments', comments)
         comments_path = details_sel.xpath("./a[starts-with(@href, 'item')]/@href").extract_first()
         comments_url = (comments_path and urljoin(response.url, comments_path))

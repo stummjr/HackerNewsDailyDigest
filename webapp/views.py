@@ -29,7 +29,7 @@ def daily_summary(request):
         items_response.append(HackerNewsItem.objects.filter(url=item_url).last())
     return render(request, 'main.html', {
         'items': sorted(items_response,
-                        key=lambda item: item.points and int(item.points.split(" ")[0]),
+                        key=lambda item: item.points,
                         reverse=True),
         'timestamp': datetime.now().date()
     })
