@@ -7,10 +7,10 @@ from django.db import models, migrations
 def forwards_func(apps, schema_editor):
     HackerNewsItem = apps.get_model("webapp", "HackerNewsItem")
     db_alias = schema_editor.connection.alias
-    for item in HackerNewsItem.objects.using(db_alias).all():
-        item.comments_new = item.comments and int(item.comments.split(" ")[0])
-        item.points_new = item.points and int(item.points.split(" ")[0])
-        item.save()
+    for i in HackerNewsItem.objects.using(db_alias).all():
+        i.comments_new = int(0 if not i or i.comments == "discuss" else i.comments.split(" ")[0])
+        i.points_new = i.points and int(i.points.split(" ")[0])
+        i.save()
 
 
 class Migration(migrations.Migration):
