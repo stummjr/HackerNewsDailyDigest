@@ -8,7 +8,9 @@ def forwards_func(apps, schema_editor):
     HackerNewsItem = apps.get_model("webapp", "HackerNewsItem")
     db_alias = schema_editor.connection.alias
     for i in HackerNewsItem.objects.using(db_alias).all():
-        i.comments_new = int(0 if not i or i.comments == "discuss" else i.comments.split(" ")[0])
+        i.comments_new = int(
+            0 if not i or i.comments in ["discuss", None] else i.comments.split(" ")[0]
+        )
         i.points_new = i.points and int(i.points.split(" ")[0])
         i.save()
 
