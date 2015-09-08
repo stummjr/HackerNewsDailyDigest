@@ -1,6 +1,5 @@
 from datetime import date
 from collections import Counter
-from collections import defaultdict
 from django.shortcuts import render
 from webapp.models import HackerNewsItem, HackerNewsItemSet
 
