@@ -1,4 +1,5 @@
 from datetime import date
+from collections import Counter
 from collections import defaultdict
 from django.shortcuts import render
 from webapp.models import HackerNewsItem, HackerNewsItemSet
@@ -30,19 +31,16 @@ def get_top_n_items(items, n):
     """
     frequency_dict = get_frequency_dict(items)
     top_30 = sorted(frequency_dict.iteritems(), key=lambda item: item[1], reverse=True)[:n]
-    return [item for item, cnt in top_30]
+    return [item for item, _ in top_30]
+
+
+def get_latest_item_by_url(url):
+    return HackerNewsItem.objects.filter(url=url).last()
 
 
 def get_frequency_dict(items):
     """
     Returns a dict containing pairs of (HackerNewsItem, frequency of item in items).
     """
-    result = defaultdict(int)
-    for item in items:
-        result[item.url] += 1
-    # transform result in a dict of (HackerNewsItem: count)
-    for url, cnt in result.items():
-        hn_item = HackerNewsItem.objects.filter(url=url).last()
-        result.pop(url)
-        result[hn_item] = cnt
-    return result
+    url_counts = Counter(it.url for it in items)
+    return {get_latest_item_by_url(url): cnt for url, cnt in url_counts.items()}
